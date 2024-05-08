@@ -1,6 +1,6 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Home from "./routes/home/Home";
-import Add from "./routes/add/Add";
+import UpdateRemote from "./routes/bodegas/UpdateRemote";
 import Layout from "./components/Layout";
 
 function App() {
@@ -10,7 +10,10 @@ function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
-            <Route path="add" element={<Add />} />
+            <Route
+              path="bodegas/actualizar-remoto"
+              element={<UpdateRemote />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -1,4 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
+import Logo from "/public/logo.svg";
 export default function Layout() {
   const testMenuItems = [
     {
@@ -65,7 +66,7 @@ export default function Layout() {
                     <div className="w-10 rounded-full">
                       <img
                         alt="Tailwind CSS Navbar component"
-                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                        src="https://avatars.githubusercontent.com/u/164236762?v=4"
                       />
                     </div>
                   </div>
@@ -89,7 +90,7 @@ export default function Layout() {
                 </div>
               </div>
             </div>
-            <main className="flex-1 p-10">
+            <main className="flex-1 pl-10 pr-10 pt-5 bg-base-100">
               <Outlet />
             </main>
             <label
@@ -105,10 +106,13 @@ export default function Layout() {
               aria-label="close side dbar"
               className="drawer-overlay"
             ></label>
-            <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+            <ul className="menu p-4 w-80 min-h-full bg-base-300 text-base-content">
               {/* Sidebar content here */}
               <div className="inline-flex mb-6">
-                <h1 className="text-xl mt-auto mb-auto ml-3">bonvino</h1>
+                <img src={Logo} alt="" className="w-10" />
+                <h1 className="text-xl font-bold select-none mt-auto mb-auto ml-3">
+                  bonvino
+                </h1>
               </div>
               {/* <ul>
                 {testMenuItems.map(({ href, title }) => (
@@ -119,7 +123,7 @@ export default function Layout() {
                   </li>
                 ))}
               </ul> */}
-              <ul className="menu bg-base-200 rounded-box">
+              <ul className="menu bg-base-300 rounded-box">
                 <li>
                   <NavLink to={"/"}>
                     <p>Home</p>
@@ -165,7 +169,9 @@ export default function Layout() {
                               <a>Crear</a>
                             </li>
                             <li>
-                              <a>Actualizar Bodegas</a>
+                              <NavLink to={"bodegas/actualizar-remoto"}>
+                                <p>Importar Actualizacion</p>
+                              </NavLink>
                             </li>
                           </ul>
                         </details>
@@ -176,7 +182,7 @@ export default function Layout() {
               </ul>
               <div
                 id="dropdown-cta"
-                class="p-4 mt-auto rounded-sm bg-gray-50 dark:bg-gray-300"
+                class="p-4 mt-auto rounded-sm dark:bg-base-200"
                 role="alert"
               >
                 <div class="flex items-center mb-3">
