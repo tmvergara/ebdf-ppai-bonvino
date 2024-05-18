@@ -1,17 +1,6 @@
 import { NavLink, Outlet } from "react-router-dom";
 import Logo from "/public/logo.svg";
 export default function Layout() {
-  const testMenuItems = [
-    {
-      href: "/",
-      title: "Home",
-    },
-    {
-      href: "add",
-      title: "About",
-    },
-  ];
-
   <li>
     <NavLink to="/">Home</NavLink>
   </li>;
@@ -24,7 +13,10 @@ export default function Layout() {
             {/* Drawer content here */}
             <div className="navbar bg-base-200">
               <div className="inline-flex">
-                <button className="btn btn-square btn-ghost lg:hidden drawer-toggle">
+                <label
+                  htmlFor="my-drawer-2"
+                  className="btn btn-square btn-ghost lg:hidden"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -38,7 +30,7 @@ export default function Layout() {
                       d="M4 6h16M4 12h16M4 18h16"
                     ></path>
                   </svg>
-                </button>
+                </label>
               </div>
               <div className="flex-1"></div>
               <div className="flex-none">
@@ -75,6 +67,11 @@ export default function Layout() {
                     className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
                   >
                     <li>
+                      <span className="justify-between font-bold">
+                        Administrador de Bonvino
+                      </span>
+                    </li>
+                    <li>
                       <a className="justify-between">
                         Profile
                         <span className="badge">New</span>
@@ -93,12 +90,6 @@ export default function Layout() {
             <main className="flex-1 pl-10 pr-10 pt-5 bg-base-100">
               <Outlet />
             </main>
-            <label
-              htmlFor="my-drawer-2"
-              className="btn btn-primary drawer-button lg:hidden"
-            >
-              Open drawer
-            </label>
           </div>
           <div className="drawer-side">
             <label
@@ -142,10 +133,10 @@ export default function Layout() {
                           <summary>Modificar</summary>
                           <ul>
                             <li>
-                              <a>Crear</a>
+                              <a>Registrar Varietal</a>
                             </li>
                             <li>
-                              <a>Eliminar Masivo</a>
+                              <a>Registrar Vino</a>
                             </li>
                           </ul>
                         </details>
@@ -166,7 +157,7 @@ export default function Layout() {
                           <summary>Modificar</summary>
                           <ul>
                             <li>
-                              <a>Crear</a>
+                              <a>Registrar Bodega</a>
                             </li>
                             <li>
                               <NavLink to={"bodegas/actualizar-remoto"}>
@@ -182,23 +173,23 @@ export default function Layout() {
               </ul>
               <div
                 id="dropdown-cta"
-                class="p-4 mt-auto rounded-sm dark:bg-base-200"
+                className="p-4 mt-auto rounded-sm dark:bg-base-200"
                 role="alert"
               >
-                <div class="flex items-center mb-3">
-                  <span class="bg-orange-100 text-orange-800 text-sm font-semibold me-2 px-2.5 py-0.5 rounded-sm dark:bg-orange-200 dark:text-orange-900">
+                <div className="flex items-center mb-3">
+                  <span className="bg-orange-100 text-orange-800 text-sm font-semibold me-2 px-2.5 py-0.5 rounded-sm dark:bg-orange-200 dark:text-orange-900">
                     Beta
                   </span>
                 </div>
-                <p class="mb-3 text-sm text-gray-800 dark:text-gray-800">
-                  Preview the new Flowbite dashboard navigation! You can turn
-                  the new navigation off for a limited time in your profile.
+                <p className="mb-3 text-sm text-gray-800 dark:text-gray-800">
+                  Recorda que esta es una version beta de bonvino, no todas las
+                  funciones se encuentran implemetadas!
                 </p>
                 <a
-                  class="text-sm text-gray-800 underline font-medium hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-500"
+                  className="text-sm text-gray-800 underline font-medium hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-500"
                   href="#"
                 >
-                  Turn new navigation off
+                  <NavLink to={"/"}>click aca para mas info. de uso</NavLink>
                 </a>
               </div>
             </ul>

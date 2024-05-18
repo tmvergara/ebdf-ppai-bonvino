@@ -1,5 +1,6 @@
 import { useState } from "react";
 import SyncServerImg from "/svgs/syncServer.svg";
+
 function BodegasConActualizacion(props) {
   const bodegas = props.bodegas;
   const initialBodegasSel = bodegas.map((bodega) => {
@@ -54,9 +55,9 @@ function BodegasConActualizacion(props) {
               importar las novedades...
             </p>
             <div className="divider"></div>
-            <table className="table mt-5">
+            <table className="table mt-5 w-full">
               {/* head */}
-              <thead>
+              <thead className="hidden lg:table-header-group">
                 <tr>
                   <th>
                     <label>
@@ -69,28 +70,36 @@ function BodegasConActualizacion(props) {
                     </label>
                   </th>
                   <th>Nombre</th>
-                  <th>Direccion</th>
+                  <th>Coordenadas</th>
                   <th>Sitio Web</th>
                 </tr>
               </thead>
               <tbody>
                 {/* row 1 */}
                 {bodegas.map((bodega) => (
-                  <tr key={bodega.id}>
-                    <th>
+                  <tr
+                    key={bodega.id}
+                    className={`block lg:table-row mb-4 lg:mb-0 p-4 lg:p-0 rounded-lg lg:rounded-none ${
+                      findSelValue(bodega.id) &&
+                      "border-2 border-gray-500 lg:border-gray-100 lg:border-b lg:border-r-0 lg:border-l-0 lg:border-t-0"
+                    } bg-base-200 lg:bg-transparent cursor-pointer`}
+                    onClick={() => handleSel(bodega.id)}
+                  >
+                    <th className="hidden md:block lg:table-cel">
                       <label>
                         <input
                           type="checkbox"
                           className="checkbox"
                           checked={findSelValue(bodega.id)}
                           onChange={() => handleSel(bodega.id)}
+                          onClick={(e) => e.stopPropagation()}
                         />
                       </label>
                     </th>
-                    <td>
+                    <td className="block lg:table-cell !p-0">
                       <div className="flex items-center gap-3">
-                        <div className="avatar">
-                          <div className="w-12 h-12">
+                        <div className="flex h-auto rounded-lg">
+                          <div className="w-12 flex h-auto rounded-lg">
                             <img
                               src={`${bodega.imagenLogo}`}
                               className="!object-contain mt-auto mb-auto"
@@ -106,34 +115,35 @@ function BodegasConActualizacion(props) {
                         </div>
                       </div>
                     </td>
-                    <td>
-                      <span className="badge badge-ghost badge-sm">
+                    <td className="block lg:table-cell !p-0 mt-2 text-right">
+                      <span className="!badge !badge-primary !badge-sm block">
                         -24.324231W 67.213234S
                       </span>
                     </td>
-                    <th>
+                    <td className="block lg:table-cell !p-0 mt-2 text-right">
                       {bodega.sitioWeb.length ? (
                         <a
-                          className="btn btn-ghost btn-xs"
+                          className="btn btn-primary md:btn-ghost btn-xs"
                           href={`${bodega.sitioWeb}`}
                           target="blank"
+                          onClick={(e) => e.stopPropagation()}
                         >
                           sitio web
                         </a>
                       ) : (
                         ""
                       )}
-                    </th>
+                    </td>
                   </tr>
                 ))}
               </tbody>
               {/* foot */}
-              <tfoot>
+              <tfoot className="table-footer-group">
                 <tr>
                   <th>{countSeleccionados} seleccionadas</th>
-                  <th></th>
-                  <th></th>
-                  <th>
+                  <th className="hidden md:table-cell"></th>
+                  <th className="hidden md:table-cell"></th>
+                  <th className="hidden md:table-cell">
                     Mostrando {bodegas.length} de {bodegas.length}
                   </th>
                 </tr>
@@ -142,16 +152,27 @@ function BodegasConActualizacion(props) {
             <div className="divider"></div>
             <div className="w-full flex mt-5">
               {countSeleccionados == 0 ? (
-                <div
-                  className="tooltip tooltip-left ml-auto z-50"
-                  data-tip="selecciona al menos una bodega"
-                >
-                  <button className="btn btn-primary ml-auto" disabled={true}>
+                <>
+                  <div
+                    className="tooltip tooltip-left ml-auto hidden md:block"
+                    data-tip="selecciona al menos una bodega"
+                  >
+                    <button
+                      className="btn btn-primary ml-auto !w-full"
+                      disabled={true}
+                    >
+                      Importar Actualizacion
+                    </button>
+                  </div>
+                  <button
+                    className="btn btn-primary ml-auto !w-full md:hidden"
+                    disabled={true}
+                  >
                     Importar Actualizacion
                   </button>
-                </div>
+                </>
               ) : (
-                <button className="btn btn-primary ml-auto">
+                <button className="btn btn-primary ml-auto !w-full md:!w-auto">
                   Importar Actualizacion
                 </button>
               )}
