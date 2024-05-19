@@ -1,5 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import SyncServerImg from "/svgs/syncServer.svg";
+import toast from "react-hot-toast";
+const apiUrl = import.meta.env.VITE_BONVINO_API_URL;
 
 function BodegasConActualizacion(props) {
   const bodegas = props.bodegas;
@@ -12,6 +15,8 @@ function BodegasConActualizacion(props) {
 
   const [bodegasSel, setBodegasSel] = useState(initialBodegasSel);
   const [selAllVal, setSelectAllVal] = useState(false);
+  const [data, setData] = useState(null);
+  const navigate = useNavigate();
 
   const countSeleccionados = bodegasSel.reduce((acc, bodega) => {
     return bodega.seleccionada ? acc + 1 : acc;
@@ -41,6 +46,47 @@ function BodegasConActualizacion(props) {
   const findSelValue = (idBodega) => {
     const sel = bodegasSel.find((bodega) => bodega.id == idBodega);
     return sel.seleccionada;
+  };
+
+  // Server POST
+  const tomarBodegasSeleccionadas = async () => {
+    const bodegas = bodegasSel
+      .filter((bodega) => bodega.seleccionada === true)
+      .map((bodega) => bodega.id);
+    try {
+      const response = await fetch(
+        `${apiUrl}/bodegas/actualizar-vinos-bodega/actualizar-bodegas`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            bodegasSeleccionadas: bodegas,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const msg = await response.json();
+        toast.error(msg.error, {
+          id: "server-post-error",
+        });
+        throw new Error(msg);
+      }
+
+      const responseData = await response.json();
+      setData(responseData);
+      console.log(responseData);
+      navigate("/bodegas/actualizar-remoto-summary", {
+        state: { bodegasActualizadas: responseData },
+      });
+    } catch (error) {
+      console.error(
+        "There was a problem with the fetch operation:",
+        error.message
+      );
+    }
   };
 
   return (
@@ -101,7 +147,7 @@ function BodegasConActualizacion(props) {
                         <div className="flex h-auto rounded-lg">
                           <div className="w-12 flex h-auto rounded-lg">
                             <img
-                              src={`${bodega.imagenLogo}`}
+                              src={`${bodega.imgLogoBodega}`}
                               className="!object-contain mt-auto mb-auto"
                               alt={`Logo ${bodega.nombre}`}
                             />
@@ -109,18 +155,16 @@ function BodegasConActualizacion(props) {
                         </div>
                         <div>
                           <div className="font-bold">{`${bodega.nombre}`}</div>
-                          <div className="text-sm opacity-50">
-                            {`${bodega.pais}`}
-                          </div>
+                          <div className="text-sm opacity-50">Argentina</div>
                         </div>
                       </div>
                     </td>
-                    <td className="block lg:table-cell !p-0 mt-2 text-right">
+                    <td className="block lg:table-cell !p-0 mt-2 text-right md:text-left">
                       <span className="!badge !badge-primary !badge-sm block">
-                        -24.324231W 67.213234S
+                        {`${bodega.coordenadas.lat} ${bodega.coordenadas.lng}`}
                       </span>
                     </td>
-                    <td className="block lg:table-cell !p-0 mt-2 text-right">
+                    <td className="block lg:table-cell !p-0 mt-2 text-right md:text-left">
                       {bodega.sitioWeb.length ? (
                         <a
                           className="btn btn-primary md:btn-ghost btn-xs"
@@ -172,7 +216,10 @@ function BodegasConActualizacion(props) {
                   </button>
                 </>
               ) : (
-                <button className="btn btn-primary ml-auto !w-full md:!w-auto">
+                <button
+                  className="btn btn-primary ml-auto !w-full md:!w-auto"
+                  onClick={tomarBodegasSeleccionadas}
+                >
                   Importar Actualizacion
                 </button>
               )}
