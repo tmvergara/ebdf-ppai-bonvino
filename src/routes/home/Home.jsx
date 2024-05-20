@@ -69,7 +69,7 @@ function Home() {
               <h4>Sobre la implementacion</h4>
               <p>
                 Nuestra implementación de Bonvino consta de una Aplicación Web
-                Responsiva (según requerimientos no funcionales) para el
+                Responsive (según requerimientos no funcionales) para el
                 frontend, que está programada en JavaScript usando React. El
                 servidor que da soporte a esta App Web corre en Node.js y
                 Express para manejar las consultas de los clientes, y es donde
