@@ -61,104 +61,34 @@ function Home() {
                     {/* Asegúrate de aplicar clases también a la lista anidada */}
                     <li>German Velez</li>
                     <li>Maria Sol Vega</li>
-                    <li>Fede --apellido</li>
-                  </ul>
-                </li>
-                <li>
-                  Alumnos
-                  <ul className="list-disc list-inside ">
-                    {" "}
-                    {/* Asegúrate de aplicar clases también a la lista anidada */}
-                    <li>German Velez</li>
-                    <li>Maria Sol Vega</li>
-                    <li>Fede --apellido</li>
+                    <li>Federico Mizzau Anadón</li>
                   </ul>
                 </li>
               </ul>
 
-              <h4>Ejemplos de Codigo</h4>
+              <h4>Sobre la implementacion</h4>
               <p>
-                Nuestra implementacion de Bonvino consta de una Aplicacion Web
-                Responsive(segun requerimientos no funcionales) para el frontend
-                que esta programada en JavaScript usando React. El servidor que
-                da soporte a esta App Web corre en NodeJS y express para manejar
-                las consultas de los clientes y es donde estan implementadas
-                todas las clases que contienen la logica de control y de negocio
-                que modelamos previamnete. <br />
+                Nuestra implementación de Bonvino consta de una Aplicación Web
+                Responsiva (según requerimientos no funcionales) para el
+                frontend, que está programada en JavaScript usando React. El
+                servidor que da soporte a esta App Web corre en Node.js y
+                Express para manejar las consultas de los clientes, y es donde
+                están implementadas todas las clases que contienen la lógica de
+                control y de negocio que modelamos previamente. <br />
                 <blockquote>
-                  Elegimos este Stack para programar nuestra solucion ya que son
-                  las tecnologias que estamos aprendiendo a usar en la materia
-                  Desarollo de Software y por lo tanto con las que nos
-                  encontramos mas familizarizados. Ademas, consideramos que son
-                  tecnologias lider en la industria y son muy frecuentemente
-                  utilizazdas para dar solucion a problemas de software con
-                  requerimientos similares a nuestro desafio.
+                  Elegimos este stack para programar nuestra solución ya que son
+                  las tecnologías que estamos aprendiendo a usar en la materia
+                  Desarrollo de Software y, por lo tanto, con las que nos
+                  encontramos más familiarizados. Además, consideramos que son
+                  tecnologías líderes en la industria y son muy frecuentemente
+                  utilizadas para dar solución a problemas de software con
+                  requerimientos similares a nuestro desafío.
                 </blockquote>
-                A continuacion se muestran algunos ejemplos del codigo que da
-                soporte a las funciones principlaes de esta implementacion y que
+                A continuación, se muestran algunos ejemplos del código que da
+                soporte a las funciones principales de esta implementación y que
                 corre en el backend de Bonvino.
               </p>
-
-              <h4>Clase Controlador</h4>
-              <p>
-                Implementa toda la logica de control del Caso de Uso y en
-                terminos de programacion es la clase que contiene los dos
-                metodos que se exponen mediante la API REST para ser consumidos
-                por esta WebApp.
-              </p>
             </article>
-            <div className="w-11/12 ml-auto mr-auto mt-5">
-              <CodeBlock
-                text={`class ControladorImportarActualizacionVB {
-                  // ... Codigo previo que inicializa la clase
-                
-                  // Operaciones/Metodos Privados
-                  #buscarBodegasConActualizacion() {
-                    this.bodegasConActualizacion = [];
-                    this.bodegas.forEach((bodega) => {
-                      if (bodega.tieneActualizacion()) {
-                        this.bodegasConActualizacion.push({
-                          id: bodega.getNombre(),
-                          nombre: bodega.getNombre(),
-                          coordenadas: bodega.getCoordenadas(),
-                          sitioWeb: bodega.getSitioWeb(),
-                          imgLogoBodega: bodega.getImgLogoBodega(),
-                        });
-                      }
-                    });
-                    return this.bodegasConActualizacion;
-                  }
-                
-                  #verificarSeleccionUnica() {
-                    if (this.bodegasSeleccionadas.length == 1) {
-                      return true;
-                    }
-                    return false;
-                  }
-                
-                  #actualizarDatosBodega() {}
-                
-                  // Operaciones/Metodos Publicas
-                  opcionImportarActualizacionVentana(req, res) {
-                    res.status(200).json(this.#buscarBodegasConActualizacion());
-                  }
-                
-                  tomarBodegasSeleccionadas(req, res) {
-                    this.bodegasSeleccionadas = req.body.bodegasSeleccionadas;
-                    if (this.#verificarSeleccionUnica()) {
-                      this.#actualizarDatosBodega();
-                    } else {
-                      res.status(500).json({
-                        error: "Este flujo del caso de uso no esta implementado.",
-                      });
-                    }
-                  }
-                }`}
-                language={"javascript"}
-                showLineNumbers={true}
-                theme={dracula}
-              />
-            </div>
           </div>
         </div>
       </div>

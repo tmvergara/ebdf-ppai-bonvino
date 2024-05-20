@@ -69,10 +69,11 @@ function UpdateSummary() {
                 </div>
                 <div className="collapse-content">
                   <div className="overflow-x-auto">
-                    <table className="table table-xs">
+                    <table className="table">
                       <thead>
                         <tr>
                           <th></th>
+                          <th>Img.</th>
                           <th>Nombre Vino</th>
                           <th>Varietal</th>
                           <th>Precio($)</th>
@@ -84,6 +85,9 @@ function UpdateSummary() {
                         {bodega.updates.map((vino, index) => (
                           <tr key={vino.id}>
                             <th>{index + 1}</th>
+                            <td className="w-min pr-0 mr-0">
+                              <img src={vino.imgEtiqueta} className="w-4" />
+                            </td>
                             <td>{vino.nombre}</td>
                             <td>{vino.varietal}</td>
                             <td>{vino.precio}</td>
