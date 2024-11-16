@@ -1,4 +1,3 @@
-import { CodeBlock, dracula } from "react-code-blocks";
 function Home() {
   return (
     <>
@@ -17,11 +16,14 @@ function Home() {
           <div className="card-body">
             <h1 className="card-title">
               Bienvenido al Administrador de Bonvino
+              <div class="badge badge-success bg-opacity-65 gap-2">
+                Entrega N°3
+              </div>
             </h1>
             <article className="prose !max-w-none">
               <p>
-                Esta es la implementacion del Grupo "El Byte del Fondo" del
-                Proyecto Practico de Aplicacion Integrador(PPAI):
+                Esta es la implementación del grupo *"El Byte del Fondo"* del
+                Proyecto Práctico de Aplicación Integrador (PPAI):
               </p>
               <div role="alert" className="alert">
                 <svg
@@ -38,49 +40,46 @@ function Home() {
                   ></path>
                 </svg>
                 <span className="text-sm">
-                  Nuestra implementacion esta solamente enfocada en el Caso de
-                  Uso N5:{" "}
+                  Nuestra implementación está enfocada únicamente en el Caso de
+                  Uso N°5:{" "}
                   <code className="kbd kbd-xs">
-                    Importar Actualizacion de Vinos de Bodega`
-                  </code>{" "}
-                  y especificamente en el flujo primario,{" "}
-                  <u>
-                    que no contempla la seleccion de multiples bodegas para
-                    actualizar
-                  </u>
-                  . Es por esto que algunas de las funcionalidades pueden ser
-                  limitadas.
+                    Importar Actualización de Vinos de Bodega
+                  </code>
+                  , y se encuentran implementados tanto el flujo primario como
+                  los flujos alternativos de{" "}
+                  <u>selección de múltiples bodegas</u> y{" "}
+                  <u>el sistema externo no da respuesta</u>. Por esta razón,
+                  algunas funcionalidades pueden ser limitadas.
                 </span>
               </div>
-              <h4>Presentacion</h4>
+              <h4>Presentación</h4>
               <ul className="list-none list-inside">
                 <li>
                   Docentes
                   <ul className="list-disc list-inside">
-                    {" "}
-                    {/* Asegúrate de aplicar clases también a la lista anidada */}
-                    <li>German Velez</li>
-                    <li>Maria Sol Vega</li>
+                    <li>German Vélez</li>
+                    <li>María Sol Vega</li>
                     <li>Federico Mizzau Anadón</li>
                   </ul>
                 </li>
               </ul>
 
-              <h4>Sobre la implementacion</h4>
+              <h4>Sobre la implementación</h4>
               <p>
-                Nuestra implementación de Bonvino consta de una Aplicación Web
-                Responsive (según requerimientos no funcionales) para el
+                Nuestra implementación de Bonvino consta de una aplicación web
+                responsive (según requerimientos no funcionales) para el
                 frontend, que está programada en JavaScript usando React. El
-                servidor que da soporte a esta App Web corre en Node.js y
-                Express para manejar las consultas de los clientes, y es donde
-                están implementadas todas las clases que contienen la lógica de
-                control y de negocio que modelamos previamente. <br />
+                servidor de backend que da soporte a esta App Web corre en Java
+                y usa <b>Spring Boot</b> con <b>SQLite</b> para manejar las
+                consultas de los clientes. Es en este backend donde están
+                implementadas todas las clases que contienen la lógica de
+                negocio que modelamos previamente. <br />
                 <blockquote>
                   Elegimos este stack para programar nuestra solución ya que son
                   las tecnologías que estamos aprendiendo a usar en la materia
-                  Desarrollo de Software y, por lo tanto, con las que nos
+                  Backend de Aplicaciones y, por lo tanto, con las que nos
                   encontramos más familiarizados. Además, consideramos que son
-                  tecnologías líderes en la industria y son muy frecuentemente
+                  tecnologías líderes en la industria y muy frecuentemente
                   utilizadas para dar solución a problemas de software con
                   requerimientos similares a nuestro desafío.
                 </blockquote>
@@ -95,4 +94,5 @@ function Home() {
     </>
   );
 }
+
 export default Home;
