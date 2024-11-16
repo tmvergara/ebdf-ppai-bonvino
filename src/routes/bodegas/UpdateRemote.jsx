@@ -7,6 +7,7 @@ function UpdateRemote() {
   // Server GET
   const mostrarBodegasConActualizacionDisponible = (...args) =>
     fetch(...args).then((res) => res.json());
+
   const { data, error, isValidating } = useSWR(
     `${apiUrl}/bodegas/actualizar-vinos-bodega/bodegas-con-actualizacion`,
     mostrarBodegasConActualizacionDisponible
@@ -53,7 +54,6 @@ function UpdateRemote() {
               </div>
             ) : (
               <>
-                {console.log(data)}
                 <BodegasConActualizacion bodegas={data} />
               </>
             )}

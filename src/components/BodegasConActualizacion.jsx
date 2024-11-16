@@ -4,11 +4,13 @@ import SyncServerImg from "/svgs/syncServer.svg";
 import toast from "react-hot-toast";
 const apiUrl = import.meta.env.VITE_BONVINO_API_URL;
 
-function BodegasConActualizacion(props) {
-  const bodegas = props.bodegas;
-  const initialBodegasSel = bodegas.map((bodega) => {
+function BodegasConActualizacion({ bodegas = [] }) {
+  const bodegasData = bodegas || [];
+
+  const initialBodegasSel = bodegasData.map((bodega) => {
     return {
       id: bodega.id,
+      nombre: bodega.nombre,
       seleccionada: false,
     };
   });
@@ -44,15 +46,15 @@ function BodegasConActualizacion(props) {
   };
 
   const findSelValue = (idBodega) => {
-    const sel = bodegasSel.find((bodega) => bodega.id == idBodega);
-    return sel.seleccionada;
+    const sel = bodegasSel.find((bodega) => bodega.id === idBodega);
+    return sel?.seleccionada || false;
   };
 
-  // Server POST
   const tomarBodegasSeleccionadas = async () => {
-    const bodegas = bodegasSel
+    const bodegasNombres = bodegasSel
       .filter((bodega) => bodega.seleccionada === true)
-      .map((bodega) => bodega.id);
+      .map((bodega) => bodega.nombre);
+
     try {
       const response = await fetch(
         `${apiUrl}/bodegas/actualizar-vinos-bodega/actualizar-bodegas`,
@@ -61,9 +63,7 @@ function BodegasConActualizacion(props) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            bodegasSeleccionadas: bodegas,
-          }),
+          body: JSON.stringify(bodegasNombres),
         }
       );
 
@@ -77,21 +77,28 @@ function BodegasConActualizacion(props) {
 
       const responseData = await response.json();
       setData(responseData);
-      console.log(responseData);
+
+      // Aquí está el cambio principal - pasar los datos en el formato correcto
       navigate("/bodegas/actualizar-remoto-summary", {
-        state: { bodegasActualizadas: responseData },
+        state: {
+          actualizaciones: responseData.actualizaciones,
+          cantidadBodegasActualizadas: responseData.cantidadBodegasActualizadas,
+        },
       });
     } catch (error) {
       console.error(
         "There was a problem with the fetch operation:",
         error.message
       );
+      toast.error("Hubo un error al procesar la actualización", {
+        id: "error-update",
+      });
     }
   };
 
   return (
     <>
-      {bodegas.length ? (
+      {bodegasData.length > 0 ? (
         <div>
           <div className="overflow-x-auto">
             <p>
@@ -102,7 +109,6 @@ function BodegasConActualizacion(props) {
             </p>
             <div className="divider"></div>
             <table className="table mt-5 w-full">
-              {/* head */}
               <thead className="hidden lg:table-header-group">
                 <tr>
                   <th>
@@ -121,8 +127,7 @@ function BodegasConActualizacion(props) {
                 </tr>
               </thead>
               <tbody>
-                {/* row 1 */}
-                {bodegas.map((bodega) => (
+                {bodegasData.map((bodega) => (
                   <tr
                     key={bodega.id}
                     className={`block lg:table-row mb-4 lg:mb-0 p-4 lg:p-0 rounded-lg lg:rounded-none ${
@@ -147,14 +152,14 @@ function BodegasConActualizacion(props) {
                         <div className="flex h-auto rounded-lg">
                           <div className="w-12 flex h-auto rounded-lg">
                             <img
-                              src={`${bodega.imgLogoBodega}`}
+                              src={bodega.imgLogoBodega}
                               className="!object-contain mt-auto mb-auto"
                               alt={`Logo ${bodega.nombre}`}
                             />
                           </div>
                         </div>
                         <div>
-                          <div className="font-bold">{`${bodega.nombre}`}</div>
+                          <div className="font-bold">{bodega.nombre}</div>
                           <div className="text-sm opacity-50">Argentina</div>
                         </div>
                       </div>
@@ -165,37 +170,34 @@ function BodegasConActualizacion(props) {
                       </span>
                     </td>
                     <td className="block lg:table-cell !p-0 mt-2 text-right md:text-left">
-                      {bodega.sitioWeb.length ? (
+                      {bodega.sitioWeb && (
                         <a
                           className="btn btn-primary md:btn-ghost btn-xs"
-                          href={`${bodega.sitioWeb}`}
+                          href={bodega.sitioWeb}
                           target="blank"
                           onClick={(e) => e.stopPropagation()}
                         >
                           sitio web
                         </a>
-                      ) : (
-                        ""
                       )}
                     </td>
                   </tr>
                 ))}
               </tbody>
-              {/* foot */}
               <tfoot className="table-footer-group">
                 <tr>
                   <th>{countSeleccionados} seleccionadas</th>
                   <th className="hidden md:table-cell"></th>
                   <th className="hidden md:table-cell"></th>
                   <th className="hidden md:table-cell">
-                    Mostrando {bodegas.length} de {bodegas.length}
+                    Mostrando {bodegasData.length} de {bodegasData.length}
                   </th>
                 </tr>
               </tfoot>
             </table>
             <div className="divider"></div>
             <div className="w-full flex mt-5">
-              {countSeleccionados == 0 ? (
+              {countSeleccionados === 0 ? (
                 <>
                   <div
                     className="tooltip tooltip-left ml-auto hidden md:block"
@@ -228,12 +230,7 @@ function BodegasConActualizacion(props) {
         </div>
       ) : (
         <div className="text-center mt-10">
-          <img
-            src={SyncServerImg}
-            alt=""
-            srcset=""
-            className="w-24 ml-auto mr-auto"
-          />
+          <img src={SyncServerImg} alt="" className="w-24 ml-auto mr-auto" />
           <h3 className="italic text-gray-400 mt-8">
             No hay bodegas con actualizaciones pendientes de importar...
           </h3>
